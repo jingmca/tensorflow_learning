@@ -33,4 +33,26 @@ urllib.urlretrieve("http://mlr.cs.umass.edu/ml/machine-learning-databases/adult/
 train_file.name)  
 urllib.urlretrieve("http://mlr.cs.umass.edu/ml/machine-learning-databases/adult/adult.test",test_file.name)  </code>
 </pre>
+打开下载下来的csv文件，然而使用Pandas来加载它们，
+<pre><code>import pandas as pd
+COLUMNS = ["age", "workclass", "fnlwgt", "education", "education_num",
+           "marital_status", "occupation", "relationship", "race", "gender",
+           "capital_gain", "capital_loss", "hours_per_week", "native_country",
+           "income_bracket"]
+df_train = pd.read_csv(train_file, names=COLUMNS, skipinitialspace=True)
+df_test = pd.read_csv(test_file, names=COLUMNS, skipinitialspace=True, skiprows=1)</code></pre>
+既然是一个二分问题，我们可以构造一个“标签列”，它的值取决于收入超过50K则为1，反之为0。
+<pre><code>LABEL_COLUMN = "label"
+df_train[LABEL_COLUMN] = (df_train["income_bracket"].apply(lambda x: ">50K" in x)).astype(int)
+df_test[LABEL_COLUMN] = (df_test["income_bracket"].apply(lambda x: ">50K" in x)).astype(int)</code></pre>
+接下来，我们简单了解下数据表以及其中的哪些列可以用来预测目标值。所有的列可以分为两种类型——类别(离散量) 和 连续量：
+
++ 类别，如果它的取值是一个有限集合中的唯一元素值。例如，出身国籍（美国、日本、印度等）或 教育水平（高中，大学等）
++ 连续量，如果它的取值是在一个连续的区间中的一个数。例如，个体收入是一个连续量
+
+<pre><code>CATEGORICAL_COLUMNS = ["workclass", "education", "marital_status", "occupation",
+                       "relationship", "race", "gender", "native_country"]
+CONTINUOUS_COLUMNS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]</code></pre>
+具体的列描述如下，
+![census](census_frame.png)
 

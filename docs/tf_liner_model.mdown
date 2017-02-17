@@ -1,0 +1,18 @@
+## TensorFLow 线性模型入门
+
+在这篇入门指南里，将会使用tensorflow的tf.learn API 来解决二元分类问题：通过利用来自人口普查的数据(例如 年龄、性别、教育程度以及居住地，所谓的特征)，我们去尝试判断一个特定的人(给定上面的那些特征) 是否年收入超过50000美元(目标值)。我们会训练一个逻辑回归模型，当给定个体的相关信息，模型会输出一个[0,1]之间的数字，来表示该个体年收入超过50000美元的概率。
+
+### 安装
+
+在使用相关代码之前，需要：
+
+* 安装tensorflow
+* 获取代码，[google官方的代码](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/learn/wide_n_deep_tutorial.py) [另外一个更简单的实现代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)
+* 安装[pandas的数据分析库](http://pandas.pydata.org/),tf.learn本身并不需要pandas,但是tf对pandas提供了良好的支持,这篇文章的代码将会使用pandas。安装pandas的方式，
+	shell $ sudo pip install pandas
+* 执行代码先撸一遍看看效果:) 因为整个例子需要下载大约5M的数据文件，我已经打包放在[我的代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)里了
+1. google的代码
+	shell $ python wide_n_deep_tutorial.py --model_type=wide
+2. 我的代码
+	shell $ python tf_liner_tutorial.py
+

@@ -56,3 +56,45 @@ CONTINUOUS_COLUMNS = ["age", "education_num", "capital_gain", "capital_loss", "h
 具体的列描述如下，
 ![census](census_frame.png)
 
+### 数据转化为张量(Tensors)
+
+当构造一个TF.Learn模型的时候，输入数据需要由Input Builder来指定。这个input builder函数仅仅会在被传递给TF.Learn的`fit` 和 `evalute`这些方法的时候才会被执行。这些builder函数旨在提供一种表达能力，以便把输入的数据变成`tf.Tensor` 或 `tf.SparseTensor`(稀疏矩阵，行和列上有很多的0或者空值的矩阵)。确切地说，input builder函数总是成对地返回下面的对象：
+
++ `feature_cols`:一个字典型数据结构，每个特征列对应一个具体的`Tensors` 或 `SparseTensors`
++ `label`:一个包含目标值的`Tensor`列
+
+每个连续量的特征列构造成`Tensor`，这通常是对稠密数据的表现方式；对离散的类别数据而言，我们会用`SparseTensor`来构造它们，这是对稀疏数据的常用表现方式。
+
+<pre><code>import tensorflow as tf
+
+def input_fn(df):
+  # Creates a dictionary mapping from each continuous feature column name (k) to
+  # the values of that column stored in a constant Tensor.
+  continuous_cols = {k: tf.constant(df[k].values)
+                     for k in CONTINUOUS_COLUMNS}
+  # Creates a dictionary mapping from each categorical feature column name (k)
+  # to the values of that column stored in a tf.SparseTensor.
+  categorical_cols = {k: tf.SparseTensor(
+      indices=[[i, 0] for i in range(df[k].size)],
+      values=df[k].values,
+      shape=[df[k].size, 1])
+                      for k in CATEGORICAL_COLUMNS}
+  # Merges the two dictionaries into one.
+  feature_cols = dict(continuous_cols.items() + categorical_cols.items())
+  # Converts the label column into a constant Tensor.
+  label = tf.constant(df[LABEL_COLUMN].values)
+  # Returns the feature columns and the label.
+  return feature_cols, label
+
+def train_input_fn():
+  return input_fn(df_train)
+
+def eval_input_fn():
+  return input_fn(df_test)</code></pre>
+
+### 特征工程（选择和构造）
+
+
+
+
+

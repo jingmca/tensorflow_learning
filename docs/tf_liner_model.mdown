@@ -12,7 +12,7 @@
 	shell $ sudo pip install pandas
 * 执行代码先撸一遍看看效果:) 因为整个例子需要下载大约5M的数据文件，我已经打包放在[我的代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)里了
 1. google的代码
-	shell $ python wide_n_deep_tutorial.py --model_type=wide
+`	shell $ python wide_n_deep_tutorial.py --model_type=wide`
 2. 我的代码
-	shell $ python tf_liner_tutorial.py
+`	shell $ python tf_liner_tutorial.py`
 

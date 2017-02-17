@@ -7,14 +7,30 @@
 在使用相关代码之前，需要：
 
 * 安装tensorflow
-* 获取代码，[google官方的代码](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/learn/wide_n_deep_tutorial.py) [另外一个更简单的实现代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)
-* 安装[pandas的数据分析库](http://pandas.pydata.org/),tf.learn本身并不需要pandas,但是tf对pandas提供了良好的支持,这篇文章的代码将会使用pandas。安装pandas的方式，
-	shell $ sudo pip install pandas
-* 执行代码先撸一遍看看效果:) 因为整个例子需要下载大约5M的数据文件，我已经打包放在[我的代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)里了
+* 获取代码，[google官方的代码](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/learn/wide_n_deep_tutorial.py) 和 [另外一个更简单的实现代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)
+* 安装[pandas的数据分析库](http://pandas.pydata.org/), tf.learn本身并不需要pandas,但是tf对pandas提供了良好的支持,这篇文章的代码将会使用pandas。安装pandas的方式，
+`	shell $ sudo pip install pandas`
+* 执行代码先撸一遍看看效果:) 因为整个例子需要下载大约5M的数据文件，我已经打包放在[代码](https://github.com/jingmca/tensorflow_learning/tree/master/liner_tutorials)里了
 
 1. google的代码
 `	shell $ python wide_n_deep_tutorial.py --model_type=wide`
 
 2. 我的代码
 `	shell $ python tf_liner_tutorial.py`
+
+接下来看看这几行代码是如何创建线性模型
+
+
+### 加载普查数据
+
+这里的数据集采用[Census Income Dataset](https://archive.ics.uci.edu/ml/datasets/Census+Income)，你可以单独从这里下载[training data](https://github.com/jingmca/tensorflow_learning/blob/master/liner_tutorials/adult.data)和[test data](https://github.com/jingmca/tensorflow_learning/blob/master/liner_tutorials/adult.test) 或者 使用下面的代码:
+
+`
+import tempfile
+import urllib
+train_file = tempfile.NamedTemporaryFile()
+test_file = tempfile.NamedTemporaryFile()
+urllib.urlretrieve("http://mlr.cs.umass.edu/ml/machine-learning-databases/adult/adult.data", train_file.name)
+urllib.urlretrieve("http://mlr.cs.umass.edu/ml/machine-learning-databases/adult/adult.test", test_file.name)
+`
 

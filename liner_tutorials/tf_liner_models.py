@@ -62,6 +62,21 @@ def build_estimator(model_dir, model_type = "wide"):
     education_x_occupation = tf.contrib.layers.crossed_column([education, occupation], hash_bucket_size = int(1e4))
     age_bucket_x_education_x_occupation = tf.contrib.layers.crossed_column([age_bucket, education, occupation], hash_bucket_size = int(1e6))
 
+    #deep columns
+    deep_columns = [tf.contrib.layers.embedding_column(workclass, dimension = 8),
+                    tf.contrib.layers.embedding_column(education, dimension=8),
+                    tf.contrib.layers.embedding_column(gender, dimension=8),
+                    tf.contrib.layers.embedding_column(relationship, dimension=8),
+                    tf.contrib.layers.embedding_column(native_country,
+                                                       dimension=8),
+                    tf.contrib.layers.embedding_column(occupation, dimension=8),
+                    age,
+                    education_num,
+                    capital_gain,
+                    capital_loss,
+                    hours_per_week,
+                    ]
+
     #estimator buildup
     if model_type == "wide":
         m = tf.contrib.learn.LinearClassifier(feature_columns = [gender, native_country, education, occupation, workclass,
@@ -72,6 +87,14 @@ def build_estimator(model_dir, model_type = "wide"):
                                                   l2_regularization_strength = 1.0,
                                               ),
                                               model_dir = model_dir)
+    elif model_type == "wide_n_deep":
+        m = tf.contrib.learn.DNNLinearCombinedClassifier(
+            model_dir=model_dir,
+            linear_feature_columns = [gender, native_country, education, occupation, workclass,
+  age_bucket, education_x_occupation, age_bucket_x_education_x_occupation],
+            dnn_feature_columns = deep_columns,
+            dnn_hidden_units=[100, 50])
+
     else:
         m = None
 

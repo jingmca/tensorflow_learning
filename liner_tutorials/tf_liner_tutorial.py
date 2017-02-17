@@ -8,7 +8,7 @@ import tempfile
 import pandas as pd
 import tensorflow as tf
 
-model_dir_define = "./adult"
+model_dir_define = "./adult/wide_n_deep"
 train_file_name = "./adult/adult.data"
 test_file_name = "./adult/adult.test"
 
@@ -25,7 +25,7 @@ df_test[tflm.LABEL_COLUMN] = (df_test["income_bracket"].apply(lambda x: ">50K" i
 model_dir = tempfile.mkdtemp() if not model_dir_define else model_dir_define
 print("model directory = %s" % model_dir)
 
-model = tflm.build_estimator(model_dir, 'wide')
+model = tflm.build_estimator(model_dir, 'wide_n_deep')
 model.fit(input_fn=lambda: tflm.input_fn(df_train), steps = 200)
 results = model.evaluate(input_fn=lambda: tflm.input_fn(df_test), steps = 1)
 

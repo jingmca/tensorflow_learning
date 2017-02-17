@@ -24,6 +24,7 @@
 ### 加载普查数据
 
 这里的数据集采用[Census Income Dataset](https://archive.ics.uci.edu/ml/datasets/Census+Income)，你可以单独从这里下载[training data](https://github.com/jingmca/tensorflow_learning/blob/master/liner_tutorials/adult.data)和[test data](https://github.com/jingmca/tensorflow_learning/blob/master/liner_tutorials/adult.test) 或者 使用下面的代码:
+<pre>
 <code>
 	import tempfile  
 	import urllib  
@@ -33,6 +34,6 @@
 	train_file.name)  
 	urllib.urlretrieve("http://mlr.cs.umass.edu/ml/machine-learning-databases/adult/adult.test", test_file.name)  
 </code>>
-
+</pre>>
 
 

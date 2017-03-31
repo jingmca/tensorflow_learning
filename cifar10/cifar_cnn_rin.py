@@ -11,16 +11,17 @@ import time
 import tensorflow as tf
 import cifar_cnn_model as model
 import cifar_cnn_input
+import cifar10_cnn
 
 def train():
     with tf.Graph().as_default():
         global_step = tf.contrib.framework.get_or_create_global_step()
 
         images,labels = cifar_cnn_input.random_inputs(model.BATCH_SIZE)
-        logits = model.inference(images)
-        loss = model.losses(logits,labels)
 
-        train_op = model.train(total_loss=loss,global_step=global_step)
+        logits = cifar10_cnn.inference(images)
+        loss = cifar10_cnn.losses(logits,labels)
+        train_op = cifar10_cnn.train(loss,global_step)
 
         class _LoggerHook(tf.train.SessionRunHook):
             """Logs loss and runtime."""
@@ -54,7 +55,7 @@ def train():
                 config=tf.ConfigProto(
                     log_device_placement=False)) as mon_sess:
             while not mon_sess.should_stop():
-                mon_sess.run(train_op)
+                mon_sess.run([train_op])
 
 
 train()

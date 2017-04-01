@@ -38,7 +38,7 @@ sudo pip install --upgrade tensorflow      # for Python 2.7
 
 ###如果你`不可以`科学上网
 
-现在[这里](/tensorflow-1.0.1-py2-none-any.whl)下载二进制包文件.然后,
+现在[这里](https://github.com/jingmca/tensorflow_learning/blob/master/docs/tensorflow-1.0.1-py2-none-any.whl.zip)下载二进制包文件.然后,
 
 ```
 sudo pip install --upgrade ./tensorflow-1.0.1-py2-none-any.whl
